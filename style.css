@@ -45,3 +45,6 @@ footer .sitemap{
     float: right;
     width: 285px;
 }
+h1, h2, h3, h4{
+    font-family: 'Ubuntu', sans-serif;
+}
