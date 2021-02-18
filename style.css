@@ -5,14 +5,43 @@ body{
 header, main, footer{
     min-width: 855px;
 }
-header.container, main.container, footer.container{
+header .container, main .container, footer .container{
     max-width: 855px;
     margin: auto;
 }
 
 header{
     background: white;
+    overflow: auto;
+}
+header .left{
+    float: left;
+    width: 570px;
+}
+header .right{
+    float: right;
+    width: 285px;
 }
 main{
     background: white;
+    overflow: auto;
+}
+main .left{
+    float: left;
+    width: 570px;
+}
+main .right{
+    float: right;
+    width: 285px;
+}
+footer{
+    overflow: auto;
+}
+footer .contact{
+    float: left;
+    width: 570px;
+}
+footer .sitemap{
+    float: right;
+    width: 285px;
 }
