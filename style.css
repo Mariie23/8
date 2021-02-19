@@ -11,6 +11,7 @@ header .container, main .container, footer .container{
 }
 
 header{
+    padding: 20px;
     background: white;
     overflow: auto;
 }
@@ -23,6 +24,7 @@ header .right{
     width: 285px;
 }
 main{
+    padding: 30px;
     background: white;
     overflow: auto;
 }
@@ -45,15 +47,42 @@ footer .sitemap{
     float: right;
     width: 285px;
 }
+footer .leftUL{
+    float: left;
+    width: 142;
+}
+footer .rightUL{
+    float: right;
+    width: 143;
+}
 h1{
     font-size: 400%;
 }
 h2{
+    padding: 0px 0px 10px 0px;
     font-size: 200%;
 }
 h3{
+    padding: 25px 0px 15px 0px;
     font-size: 150%;
+}
+h4{
+    padding: 20px 0px 20px 0px;
 }
 h1, h2, h3, h4{
     font-family: 'Ubuntu', sans-serif;
+}
+main ul{
+    padding: 0px 0px 0px 18px;
+}
+main li{
+    padding: 0px 0px 5px 0px;
+    list-style: circle;
+}
+a{
+    color: red;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
 }
