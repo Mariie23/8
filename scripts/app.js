@@ -3,14 +3,6 @@ var main = function (toDoObjects) {
     var toDos = toDoObjects.map(function (toDo) {
         return toDo.description;
     });
-    /*var toDos = [
-        "Закончить писать книгу",
-        "Вывести Грейси на прогулку в парк",
-        "Ответить на письма нанимателей в LinkedIn",
-        "Подготовиться к лекции в понедельник",
-        "Обновить несколько новых задач",
-        "Купить продукты"
-    ];*/
     $(".tabs a span").toArray().forEach(function (element) {
         $(element).on("click", function () {
             var $element = $(element);
@@ -31,6 +23,8 @@ var main = function (toDoObjects) {
                 });
                 $("main .content").append($content);
             } else if ($element.parent().is(":nth-child(3)")) {
+                console.log("Щелчок по вкладке Теги");
+            } else if ($element.parent().is(":nth-child(4)")) {
                 var $input = $("<input>");
                 var $button = $("<button>+</button>");
                 $("main .content").append($input);
