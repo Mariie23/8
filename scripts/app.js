@@ -1,14 +1,44 @@
 var main = function () {
     "use strict";
-    var tabNumber;
-    for (tabNumber = 1; tabNumber <= 3; tabNumber++) {
-        var tabSelector = ".tabs a:nth-child(" + tabNumber + ") span";
-        $(tabSelector).on("click", function () {
-            $(".tabs span").removeClass("active");
-            $(this).addClass("active");
-            $("main.content").empty();
+    var toDos = [
+        "Закончить писать книгу",
+        "Вывести Грейси на прогулку в парк",
+        "Ответить на письма нанимателей в LinkedIn",
+        "Подготовиться к лекции в понедельник",
+        "Обновить несколько новых задач",
+        "Купить продукты"
+    ];
+    $(".tabs a span").toArray().forEach(function (element) {
+        $(element).on("click", function () {
+            var $element = $(element);
+            var $content;
+            $(".tabs a span").removeClass("active");
+            $(element).addClass("active");
+            $("main .content").empty();
+            if ($element.parent().is(":nth-child(1)")) {
+                $content = $("<ul>");
+                for (var i = toDos.length - 1; i > -1; i--) {
+                    $content.append($("<li>").text(toDos[i]));
+                }
+                $("main .content").append($content);
+            } else if ($element.parent().is(":nth-child(2)")) {
+                $content = $("<ul>");
+                toDos.forEach(function (todo) {
+                    $content.append($("<li>").text(todo));
+                });
+                $("main .content").append($content);
+            } else if ($element.parent().is(":nth-child(3)")) {
+                var $input = $("<input>");
+                var $button = $("<button>+</button>");
+                $("main .content").append($input);
+                $("main .content").append($button);
+                $(".content button").on("click", function () {
+                    toDos.push($input.val());
+                });
+            }
             return false;
         });
-    }
+    });
+    $(".tabs a:first-child span").trigger("click");
 }
 $(document).ready(main);
