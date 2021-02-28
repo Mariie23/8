@@ -1,13 +1,16 @@
-var main = function () {
+var main = function (toDoObjects) {
     "use strict";
-    var toDos = [
+    var toDos = toDoObjects.map(function (toDo) {
+        return toDo.description;
+    });
+    /*var toDos = [
         "Закончить писать книгу",
         "Вывести Грейси на прогулку в парк",
         "Ответить на письма нанимателей в LinkedIn",
         "Подготовиться к лекции в понедельник",
         "Обновить несколько новых задач",
         "Купить продукты"
-    ];
+    ];*/
     $(".tabs a span").toArray().forEach(function (element) {
         $(element).on("click", function () {
             var $element = $(element);
@@ -41,4 +44,8 @@ var main = function () {
     });
     $(".tabs a:first-child span").trigger("click");
 }
-$(document).ready(main);
+$(document).ready(function () {
+    $.getJSON("todos.json", function (toDoObjects) {
+        main(toDoObjects);
+    });
+});
