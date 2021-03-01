@@ -74,11 +74,23 @@ var main = function (toDoObjects) {
                 });
             } else if ($element.parent().is(":nth-child(4)")) {
                 var $input = $("<input>");
+                var $inputLabel = $("<p>").text("Новая задача");
+                var $tagInput = $("<input>");
+                var $tagLabel = $("<p>").text("Тэги: ");
                 var $button = $("<button>+</button>");
+                $("main .content").append($inputLabel);
                 $("main .content").append($input);
+                $("main .content").append($tagLabel);
+                $("main .content").append($tagInput);
                 $("main .content").append($button);
                 $(".content button").on("click", function () {
-                    toDos.push($input.val());
+                    var description = $input.val();
+                    var tags = $tagInput.val().split(",");
+                    toDoObjects.push({ "description": description, "tags": tags });
+                    //обновление toDos
+                    toDos = toDoObjects.map(function (toDo) {
+                        return toDo.description;
+                    });
                 });
             }
             return false;
