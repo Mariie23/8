@@ -103,3 +103,10 @@ main .tabs a span{
 main .tabs a span.active{
     background: #eee;
 }
+.content{
+    background-color: #eee;
+    padding: 10px;
+}
+.content h3{
+    padding: 0px 0px 10px 0px;
+}
