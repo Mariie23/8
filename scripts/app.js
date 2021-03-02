@@ -76,6 +76,29 @@ var main = function (toDoObjects) {
                 var $input = $("<input>");
                 var $inputLabel = $("<p>").text("Новая задача");
                 var $tagInput = $("<input>");
+                /*$tagInput.addEventListener("keyup", function (event) {
+                    if (event.keyCode === 13) {
+                        var description = $input.val();
+                        var tags = $tagInput.val().split(",");
+                        toDoObjects.push({ "description": description, "tags": tags });
+                        //обновление toDos
+                        toDos = toDoObjects.map(function (toDo) {
+                            return toDo.description;
+                        });
+                    }
+                });*/
+                $tagInput.keypress(function (e) {
+                    if (e.which == 13 && $input.val() != "" && $tagInput.val() != "") {
+                        var description = $input.val();
+                        var tags = $tagInput.val().split(",");
+                        toDoObjects.push({ "description": description, "tags": tags });
+                        //обновление toDos
+                        toDos = toDoObjects.map(function (toDo) {
+                            return toDo.description;
+                        });
+                        $(".tabs a:first-child span").trigger("click");
+                    }
+                });
                 var $tagLabel = $("<p>").text("Тэги: ");
                 var $button = $("<button>+</button>");
                 $("main .content").append($inputLabel);
@@ -84,13 +107,17 @@ var main = function (toDoObjects) {
                 $("main .content").append($tagInput);
                 $("main .content").append($button);
                 $(".content button").on("click", function () {
-                    var description = $input.val();
-                    var tags = $tagInput.val().split(",");
-                    toDoObjects.push({ "description": description, "tags": tags });
-                    //обновление toDos
-                    toDos = toDoObjects.map(function (toDo) {
-                        return toDo.description;
-                    });
+                    if ($input.val() != "" && $tagInput.val() != "") {
+                        var description = $input.val();
+                        var tags = $tagInput.val().split(",");
+                        toDoObjects.push({ "description": description, "tags": tags });
+                        //обновление toDos
+                        toDos = toDoObjects.map(function (toDo) {
+                            return toDo.description;
+                        });
+                        $(".tabs a:first-child span").trigger("click");
+                    }
+
                 });
             }
             return false;
