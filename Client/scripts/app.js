@@ -76,27 +76,28 @@ var main = function (toDoObjects) {
                 var $input = $("<input>");
                 var $inputLabel = $("<p>").text("Новая задача");
                 var $tagInput = $("<input>");
-                /*$tagInput.addEventListener("keyup", function (event) {
-                    if (event.keyCode === 13) {
-                        var description = $input.val();
-                        var tags = $tagInput.val().split(",");
-                        toDoObjects.push({ "description": description, "tags": tags });
-                        //обновление toDos
-                        toDos = toDoObjects.map(function (toDo) {
-                            return toDo.description;
-                        });
-                    }
-                });*/
                 $tagInput.keypress(function (e) {
-                    if (e.which == 13 && $input.val() != "" && $tagInput.val() != "") {
-                        var description = $input.val();
-                        var tags = $tagInput.val().split(",");
-                        toDoObjects.push({ "description": description, "tags": tags });
-                        //обновление toDos
-                        toDos = toDoObjects.map(function (toDo) {
-                            return toDo.description;
-                        });
-                        $(".tabs a:first-child span").trigger("click");
+                    if (e.which == 13) {
+                        if ($input.val() != "" && $tagInput.val() != "") {
+                            var description = $input.val();
+                            var tags = $tagInput.val().split(",");
+                            // создаем новый элемент списка задач
+                            var newToDo = { "description": description, "tags": tags };
+                            // здесь мы отправляем быстрое сообщение на маршрут списка задач
+                            $.post("todos", newToDo, function (response) {
+                                // этот обратный вызов выполняется при ответе сервера
+                                console.log("Мы отправили данные и получили ответ сервера!");
+                                console.log(response);
+                                // нужно отправить новый объект на клиент
+                                // после получения ответа сервера
+                                toDoObjects.push(newToDo);
+                                //обновление toDos
+                                toDos = toDoObjects.map(function (toDo) {
+                                    return toDo.description;
+                                });
+                                $(".tabs a:first-child span").trigger("click");
+                            });
+                        } else { alert("Поля должны быть заполнены"); }
                     }
                 });
                 var $tagLabel = $("<p>").text("Тэги: ");
@@ -110,13 +111,23 @@ var main = function (toDoObjects) {
                     if ($input.val() != "" && $tagInput.val() != "") {
                         var description = $input.val();
                         var tags = $tagInput.val().split(",");
-                        toDoObjects.push({ "description": description, "tags": tags });
-                        //обновление toDos
-                        toDos = toDoObjects.map(function (toDo) {
-                            return toDo.description;
+                        // создаем новый элемент списка задач
+                        var newToDo = { "description": description, "tags": tags };
+                        // здесь мы отправляем быстрое сообщение на маршрут списка задач
+                        $.post("todos", newToDo, function (response) {
+                            // этот обратный вызов выполняется при ответе сервера
+                            console.log("Мы отправили данные и получили ответ сервера!");
+                            console.log(response);
+                            // нужно отправить новый объект на клиент
+                            // после получения ответа сервера
+                            toDoObjects.push(newToDo);
+                            //обновление toDos
+                            toDos = toDoObjects.map(function (toDo) {
+                                return toDo.description;
+                            });
+                            $(".tabs a:first-child span").trigger("click");
                         });
-                        $(".tabs a:first-child span").trigger("click");
-                    }
+                    } else { alert("Поля должны быть заполнены"); }
 
                 });
             }
