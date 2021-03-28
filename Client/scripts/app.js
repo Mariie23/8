@@ -33,6 +33,28 @@ var organizeByTags = function (toDoObjects) {
     return tagObjects;
 };
 
+var liaWithDeleteOnСlick = function (todo) {
+    var $todoListItem = $("<li>").text(todo.description),
+        $todoRemoveLink = $("<a>").attr("href", "todos/" + todo._id);
+    $todoRemoveLink.text("Удалить");
+    console.log("todo._id: " + todo._id);
+    console.log("todo.description: " + todo.description);
+    $todoRemoveLink.on("click", function () {
+        $.ajax({
+            "url": "todos/" + todo._id,
+            "type": "DELETE"
+        }).done(function (response) {
+            location.reload();
+            $(".tabs a:first-child span").trigger("click");
+        }).fail(function (err) {
+            console.log("error on delete 'todo'!");
+        });
+        return false;
+    });
+    $todoListItem.append($todoRemoveLink);
+    return $todoListItem;
+};
+
 
 var main = function (toDoObjects) {
     "use strict";
@@ -49,7 +71,7 @@ var main = function (toDoObjects) {
             if ($element.parent().is(":nth-child(1)")) {
                 $content = $("<ul>");
                 for (var i = toDos.length - 1; i > -1; i--) {
-                    $content.append($("<li>").text(toDos[i]));
+                    $content.append(liaWithDeleteOnСlick(toDoObjects[i]));
                 }
                 $("main .content").append($content);
             } else if ($element.parent().is(":nth-child(2)")) {
