@@ -2,6 +2,9 @@ var express = require("express"),
     http = require("http"),
     // импортируем библиотеку mongoose
     mongoose = require("mongoose"),
+    usersController = require("./controllers/usersController"),
+    toDosController = require("./controllers/todosController"),
+    ToDo = require("./models/todo"),
     app = express();
 // toDos = [
 //     {
@@ -31,31 +34,7 @@ var express = require("express"),
 // ];
 // подключаемся к хранилищу данных Amazeriffic в Mongo
 mongoose.connect('mongodb://localhost/amazeriffic');
-// Это модель Mongoose для задач
-var ToDoSchema = mongoose.Schema({
-    description: String,
-    tags: [String]
-});
-var ToDo = mongoose.model("ToDo", ToDoSchema);
-// //добавим пару задач
-// var task1 = new ToDo({ "description": "Закончить писать книгу", "tags": ["писательство", "работа"] });
-// var task2 = new ToDo({ "description": "Вывести Грейси на прогулку в парк", "tags": ["питомцы"] });
-// task1.save(function (err) {
-//     if (err !== null) {
-//         // объект не был сохранен
-//         console.log(err);
-//     } else {
-//         console.log("Объект был сохранен!");
-//     }
-// });
-// task2.save(function (err) {
-//     if (err !== null) {
-//         // объект не был сохранен
-//         console.log(err);
-//     } else {
-//         console.log("Объект был сохранен!");
-//     }
-// });
+
 // начинаем слушать запросы
 http.createServer(app).listen(3000);
 
@@ -99,7 +78,17 @@ app.post("/todos", function (req, res) {
     });
 });
 
+app.use('/', express.static((__dirname + "/Client")));
+app.use('/user/:username', express.static(__dirname + '/client'));
 
+app.get("/users.json", usersController.index);
+app.post("/users", usersController.create);
+app.get("/users/:username", usersController.show);
+app.put("/users/:username", usersController.update);
+app.delete("/users/:username", usersController.destroy);
 
-
+app.get("/user/:username/todos.json", toDosController.index);
+app.post("/user/:username/todos", toDosController.create);
+app.put("/user/:username/todos/:id", toDosController.update);
+app.delete("/user/:username/todos/:id", toDosController.destroy);
 
