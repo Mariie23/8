@@ -33,6 +33,30 @@ var organizeByTags = function (toDoObjects) {
     return tagObjects;
 };
 
+var liaWithEditOnСlick = function (todo) {
+    var $todoListItem = $("<li>").text(todo.description),
+        $todoRemoveLink = $("<a>").attr("href", "todos/" + todo._id);
+    $todoRemoveLink.text("Редактировать");
+    $todoRemoveLink.on("click", function () {
+        var newDescription = prompt("Введите новое наименование для задачи",
+            todo.description);
+        if (newDescription !== null && newDescription.trim() !== "") {
+            $.ajax({
+                url: "todos/" + todo._id,
+                type: "PUT",
+                data: { "description": newDescription }
+            }).done(function (response) {
+                location.reload();
+                $(".tabs a:nth-child(2) span").trigger("click");
+            }).fail(function (err) {
+            });
+        }
+        return false;
+    });
+    $todoListItem.append($todoRemoveLink);
+    return $todoListItem;
+};
+
 var liaWithDeleteOnСlick = function (todo) {
     var $todoListItem = $("<li>").text(todo.description),
         $todoRemoveLink = $("<a>").attr("href", "todos/" + todo._id);
@@ -76,9 +100,9 @@ var main = function (toDoObjects) {
                 $("main .content").append($content);
             } else if ($element.parent().is(":nth-child(2)")) {
                 $content = $("<ul>");
-                toDos.forEach(function (todo) {
-                    $content.append($("<li>").text(todo));
-                });
+                for (var i = 0; i < toDos.length; i++) {
+                    $content.append(liaWithEditOnСlick(toDoObjects[i]));
+                }
                 $("main .content").append($content);
             } else if ($element.parent().is(":nth-child(3)")) {
                 console.log("Щелчок по вкладке Теги");
