@@ -21,27 +21,87 @@ User.find({}, function (err, result) {
 
 var UsersController = {};
 UsersController.index = function (req, res) {
-    console.log("вызвано действие: индекс");
-    res.send(200);
+    User.find({}, function (err, users) {
+        if (err !== null) {
+            res.json(500, err);
+        } else if (users.length === 0) {
+            res.status(404).json({ "result_length": 0 });
+        } else {
+            res.status(200).json(users);
+        }
+    });
 };
 // Отобразить пользователя
 UsersController.show = function (req, res) {
-    console.log("вызвано действие: показать");
-    res.send(200);
+    var username = req.params.username;
+    User.find({ "username": username }, function (err, result) {
+        if (err) {
+            res.send(500);
+        } else {
+            if (result.length === 0) {
+                console.log("Пользователь с таким именем нет");
+                res.status(200).json(null);
+            } else {
+                console.log("Пользователь с таким именем уже существует");
+                res.status(200).json(username);
+            }
+        }
+    });
 };
 // Создать нового пользователя
 UsersController.create = function (req, res) {
-    console.log("вызвано действие: создать");
-    res.send(200);
+    var newUser = new User({
+        "username": req.body.username
+    });
+    User.find({ "username": newUser.username }, function (err, result) {
+        if (err) {
+            res.send(500);
+        } else {
+            if (result.length === 0) {
+                newUser.save(function (err, result) {
+                    if (err !== null) {
+                        res.json(500, err);
+                    } else {
+                        res.status(200).json(result);
+                    }
+                });
+            } else {
+                console.log("Пользователь с таким именем уже существует");
+                res.status(200).json(null);
+            }
+
+        }
+    });
 };
 // Обновить существующего пользователя
 UsersController.update = function (req, res) {
-    console.log("вызвано действие: обновить");
-    res.send(200);
+    var username = req.params.username;
+    var newUsername = { $set: { username: req.body.username } };
+    User.updateOne({ "username": username }, newUsername, function (err, user) {
+        if (err !== null) {
+            res.status(500).json(err);
+        } else {
+            if (user.n === 1 && user.nModified === 1 && user.ok === 1) {
+                res.status(200).json(user);
+            } else {
+                res.status(404).json({ "status": 404 });
+            }
+        }
+    });
 };
 // Удалить существующего пользователя
 UsersController.destroy = function (req, res) {
-    console.log("destroy action called");
-    res.send(200);
+    var id = req.params.id;
+    User.deleteOne({ "_id": id }, function (err, user) {
+        if (err !== null) {
+            res.status(500).json(err);
+        } else {
+            if (user.n === 1 && user.ok === 1 && user.deletedCount === 1) {
+                res.status(200).json(user);
+            } else {
+                res.status(404).json({ "status": 404 });
+            }
+        }
+    });
 };
 module.exports = UsersController;

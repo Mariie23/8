@@ -46,7 +46,7 @@ var liaWithEditOnСlick = function (todo) {
                 type: "PUT",
                 data: { "description": newDescription }
             }).done(function (response) {
-                location.reload();
+                //location.reload();
                 $(".tabs a:nth-child(2) span").trigger("click");
             }).fail(function (err) {
             });
@@ -68,7 +68,6 @@ var liaWithDeleteOnСlick = function (todo) {
             "url": "todos/" + todo._id,
             "type": "DELETE"
         }).done(function (response) {
-            location.reload();
             $(".tabs a:first-child span").trigger("click");
         }).fail(function (err) {
             console.log("error on delete 'todo'!");
@@ -94,15 +93,19 @@ var main = function (toDoObjects) {
             $("main .content").empty();
             if ($element.parent().is(":nth-child(1)")) {
                 $content = $("<ul>");
-                for (var i = toDos.length - 1; i > -1; i--) {
-                    $content.append(liaWithDeleteOnСlick(toDoObjects[i]));
-                }
+                $.getJSON("todos.json", function (toDoObjects) {
+                    for (var i = toDoObjects.length - 1; i > -1; i--) {
+                        $content.append(liaWithDeleteOnСlick(toDoObjects[i]));
+                    }
+                });
                 $("main .content").append($content);
             } else if ($element.parent().is(":nth-child(2)")) {
                 $content = $("<ul>");
-                for (var i = 0; i < toDos.length; i++) {
-                    $content.append(liaWithEditOnСlick(toDoObjects[i]));
-                }
+                $.getJSON("todos.json", function (toDoObjects) {
+                    for (var i = 0; i < toDoObjects.length; i++) {
+                        $content.append(liaWithEditOnСlick(toDoObjects[i]));
+                    }
+                });
                 $("main .content").append($content);
             } else if ($element.parent().is(":nth-child(3)")) {
                 console.log("Щелчок по вкладке Теги");

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amazeriffic</title>
     <link rel="stylesheet" type="text/css" href="stylesheets/reset.css">
-    <link rel="stylesheet" type="text/css" href="stylesheets/style_Index.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style_Tasks.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
 </head>
@@ -19,30 +19,19 @@
             </div>
             <div class="right">
                 <nav>
-                    <a href="/users.html">Администратор</a>
+                    <a href="users.html">Администратор</a>
                     <a href="faq.html">ВиО</a>
                     <a href="tasks.html">Задачи</a>
-                    <a href="/signIn.html">Войти</a>
-                    <a href="/">Выйти</a>
                 </nav>
             </div>
         </div>
     </header>
     <main>
         <div class="container">
-            <div class="left">
-                <h2>Amazeriffic изменит вашу жизнь!</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit, sed do eiusmod tempor
-                    incididunt ut laboreet dolore magna aliqua.</p>
-                <h3>Почему вам нужен Amazeriffic?</h3>
-                <ul>
-                    <li>Он легко впишется в вашу жизнь</li>
-                    <li>Он классный</li>
-                    <li>Он перевернет ваш мир</li>
-                </ul>
+            <div class="tabs">
+                <a href="#"><span class="active">Войти</span></a>
             </div>
-            <div class="right">
-                <img src="lightbulb.png" alt="Изображение лампочки">
+            <div class="content">
             </div>
         </div>
     </main>
@@ -58,7 +47,7 @@
                 <h4>Карта сайта</h4>
                 <ul>
                     <div class="leftUL">
-                        <li><a href="#">Домой</a></li>
+                        <li><a href="index.html">Домой</a></li>
                         <li><a href="#">О нас</a></li>
                         <li><a href="#">Право</a></li>
                     </div>
@@ -71,6 +60,8 @@
             </div>
         </div>
     </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts/signIn.js"></script>
 </body>
 
 </html>

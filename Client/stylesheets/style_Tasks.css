@@ -99,6 +99,9 @@ main .tabs a span{
     background: #ddd;
     padding: 5px;
 }
+main .content a{
+    float: right;
+}
 
 main .tabs a span.active{
     background: #eee;
