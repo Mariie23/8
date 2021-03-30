@@ -1,4 +1,5 @@
 var User = require("../models/user.js"),
+    ToDo = require("../models/todo"),
     mongoose = require("mongoose");
 
 // проверка, не существует ли уже пользователь
@@ -92,12 +93,15 @@ UsersController.update = function (req, res) {
 // Удалить существующего пользователя
 UsersController.destroy = function (req, res) {
     var id = req.params.id;
+    //ToDo.deleteMany({ "owner": id });
     User.deleteOne({ "_id": id }, function (err, user) {
         if (err !== null) {
             res.status(500).json(err);
         } else {
             if (user.n === 1 && user.ok === 1 && user.deletedCount === 1) {
                 res.status(200).json(user);
+                console.log("Удален пользователь");
+                ToDo.deleteMany({ "owner": id }, (err, status) => { console.log(status); });
             } else {
                 res.status(404).json({ "status": 404 });
             }
